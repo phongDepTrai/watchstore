@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from ckeditor.fields import RichTextField
 # Create your models here.
 class Product(models.Model):
     code = models.CharField(max_length=264,unique=True)
@@ -11,7 +10,7 @@ class Product(models.Model):
     category = models.CharField(max_length=264)
     sex = models.IntegerField()
     fee = models.IntegerField()
-    description = RichTextField()
+    description = models.TextField()
     state = models.CharField(max_length=264,default="None")
     created = models.DateTimeField(auto_now = True)
     image = models.ImageField(upload_to = "images/")
