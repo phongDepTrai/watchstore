@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block body_block %}
+{% load humanize %}
+{% load static %}
+<hr class="mt-4 mb-4">
+<div class="container">
+    <h1 class="text-center text-danger">Thông tin giỏ hàng</h1>
+    <br>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Sản phẩm
+                    </th>
+                    <th>
+                        Tên sản phẩm
+                    </th>
+                    <th>
+                        Số lượng
+                    </th>
+                    <th>
+                        Đơn giá (vnđ)
+                    </th>
+                    <th>
+                        Thành tiền (vnđ)
+                    </th>
+                    <th>
+                        Xoá
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                <tr>
+                    <td>
+                        <a href="{% url 'mystore:product_detail' item.product.pk%}">
+                            <img width="80px" src="{{item.product.image.url}}"></a>
+                    </td>
+                    <td>{{item.product.name}}</td>
+                    <td>
+                        <form action="{% url 'cart:cart_add' item.product.pk%}" method="post">
+                            <span>{{item.update_quantity_form.quantity}}</span>
+                            <span class="pl-2">{{item.update_quantity_form.update}}</span>
+                            <input class="btn btn-sm btn-success" type="submit" value="Cập nhật" />
+                            {% csrf_token %}
+                        </form>
+                    </td>
+                    <td>{{item.fee|intcomma}}</td>
+                    <td>{{item.total_fee|intcomma}}</td>
+                    <td><a class="btn btn-sm btn-danger" href="{% url 'cart:cart_remove' item.product.pk%}">Xóa</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="text-right font-italic">Tổng: {{cart.get_total_fee|intcomma}} vnđ</p>
+        <p class="text-right">
+            <a href="{% url 'mystore:index' %}" class="btn btn-info">Tiếp tục mua hàng</a>
+            <a href="{% url 'orders:order_create'%}" class="btn btn-primary">Thanh toán</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

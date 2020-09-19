@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block body_block %}
+{% load static %}
+
+<hr class="mt-4 mb-4">
+<div class="container">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            {% if registered %}
+            <p class="h4 text-center text-success">Bạn đã đăng ký thành công.</p>
+            {% else %}
+            <p class="h3 text-center text-danger">Điền vào form đăng ký</p>
+            <form method="POST" enctype="multipart/form-data">
+                <table>
+                    {% for field in user_form %}
+                    <tr>
+                        <td class="p-2">{{field.label}} </td>
+                        <td class="p-2">{{field}}</td>
+                    </tr>
+                    {% endfor %}
+                    {% for field1 in profile_form %}
+                    <tr>
+                        <td class="p-2">{{field1.label}} </td>
+                        <td class="p-2">{{field1}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <input type="submit" class="btn btn-danger btn-block my-4" value="Đăng ký">
+                {% csrf_token %}
+            </form>
+        </div>
+        {% endif %}
+    </div>
+    <div class="col-3"></div>
+</div>
+</div>
+{% endblock %}

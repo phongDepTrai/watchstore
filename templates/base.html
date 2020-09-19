@@ -1,0 +1,138 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <title>Đồng hồ</title>
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top">
+        <a class="navbar-brand" href="{% url 'mystore:index' %}">
+            <img src="{% static "images\logo.png" %}" width="30" height="30" class="d-inline-block align-top" alt=""
+                loading="lazy">
+            DJANGO
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Nhãn hiệu
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'mystore:index' 5%}">Seiko</a>
+                        <a class="dropdown-item" href="{% url 'mystore:index' 6%}">Frederique Constant</a>
+                        <a class="dropdown-item" href="{% url 'mystore:index' 7%}">Tissot</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'mystore:index' 8%}">Đồng hồ nam</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'mystore:index' 9%}">Đồng hồ nữ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'mystore:index' 10%}">Cặp đôi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'cart:cart_detail'%}">Giỏ hàng</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li>
+                    <a class="nav-link text-white" href="{% url 'mystore:logout' %}">Đăng xuất</a>
+                </li>
+                {% else %}           
+                <li>
+                    <a class="nav-link text-white" href="{% url 'mystore:login' %}">Đăng nhập</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'mystore:register' %}">Đăng ký</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <form class="form-inline" method="POST" action="{% url 'mystore:index' 4 %}">
+            <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+            {% csrf_token %}
+        </form>
+    </nav>
+    <hr class="mt-4 mb-4">
+
+    <!-- End Header -->
+
+    <!-- Content -->
+    {% block body_block %}
+    <!-- Anything outsite of this will be inherited if you extend! -->
+    {% endblock %}
+    <!-- End Content -->
+
+    <!-- Footer -->
+    <hr class="mb-4">
+    <footer>
+        <div class="container-fluid bg-danger text-white">
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="pt-4 h4">Contact:</p>
+                    <p class="footer-contact">
+                        137 Nguyen Chi Thanh, 5 District, HCM City, VietNam<br>
+                        Phone: 0123456789 Fax: 0123456789<br>
+                        Email: hello@watchstore.org<br>
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="pt-4 h4">Links:</p>
+                    <p> <a class="text-white" href="#"> Đồng hồ nam</a></p>
+                    <p> <a class="text-white" href="#"> Đồng hồ nữ</a></p>
+                    <p> <a class="text-white" href="#"> Đồng hồ đôi</a></p>
+                </div>
+                <div class="col-md-4">
+                    <p class="pt-4 h4"> Socialize:</p>
+                    <div id="social-icons" class="text-white">
+                        <div>
+                            <a href="#" class="text-white">
+                                Facebook
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" class="text-white">
+                                Linkin
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" class="text-white">
+                                Twitter
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

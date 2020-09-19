@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block body_block %}
+{% load static %}
+
+<!-- Default form login -->
+<hr class="mt-4 mb-4">
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <form class="text-center border border-light p-5" method="POST" action="{% url 'mystore:login' %}">
+
+                <p class="h4 mb-4">Đăng nhập</p>
+
+                <!-- Email -->
+                <input type="text" name="username" placeholder="Enter username" class="form-control mb-4">
+
+                <!-- Password -->
+                <input type="password" name="password" placeholder="Enter password" class="form-control mb-4">
+
+                <!-- Sign in button -->
+                <button class="btn btn-danger btn-block my-4" type="submit">Đăng nhập</button>
+                {% csrf_token %}
+                <!-- Register -->
+                <p>Không phải thành viên?
+                    <a href="{% url 'mystore:register' %}">Đăng ký</a>
+                </p>
+                <p class="text-center text-danger">{{login_result}}</p>
+            </form>
+        </div>
+        <div class="col-md-3"></div>        
+    </div>
+    
+</div>
+
+<!-- Default form login -->
+
+{% endblock %}

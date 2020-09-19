@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block body_block %}
+{% load humanize %}
+{% load static %}
+
+<!-- Slides -->
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static "images\slides\slide_1.jpg" %}" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static "images\slides\slide_2.jpg" %}" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static "images\slides\slide_3.jpg" %}" class="d-block w-100" alt="...">
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </a>
+</div>
+<!-- End Slides -->
+
+<!-- Cart Info -->
+<div class="container">
+    <div class="text-right m-3">
+        {% if cart %}
+        <a class="text-danger text-italic" href="{% url 'cart:cart_detail'%}">
+            Giỏ hàng có {{cart|length}} sản phẩm. Tổng: {{cart.get_total_fee|intcomma}} vnđ</a>
+        {% else %}
+        Giỏ hàng đang trống
+        {% endif %}
+    </div>
+</div>
+<!-- End Cart Info -->
+
+<!-- Products Info -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <p>Số lượng sản phẩm tìm thấy là {{amount}}.</p>
+        </div>
+        <div class="col-md-6">
+            <div class="dropdown float-right">
+                <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Sắp xếp theo
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">                    
+                    <button class="dropdown-item"><a href="{% url 'mystore:index' 2%}">Giá giảm</a></button>
+                    <button class="dropdown-item"><a href="{% url 'mystore:index' 1%}">Giá tăng</a></button>
+                    <button class="dropdown-item"><a href="{% url 'mystore:index' 3%}">Mới nhất</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Products Info -->
+
+<!-- Product List -->
+<div class="mt-2"></div>
+<div class="container">
+    <div class="row">
+        {% if products %}
+        {% for value in products %}
+        <div class="col-lg-3 col-sm-4">
+            <div class="card mb-3">
+                <img src="{{value.image.url}}" class="card-img-top" alt="{{value.name}}">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{value.name}}</h5>
+                    <p class="card-text">{{value.fee|intcomma}} vnđ</p>
+                </div>
+                <a href="{% url 'mystore:product_detail' value.pk%}" class='btn btnprimary' style="float: center;"> Xem
+                    thêm
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif%}
+    </div>
+</div>
+<!-- End Product List -->
+
+<!-- Pagination -->
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% if products.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">Previous</a></li>
+        <li class="page-item"><a class="page-link"
+                href="?page={{ products.previous_page_number }}">{{ products.previous_page_number }}</a></li>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="?page={{ products.number }}">{{ products.number }}</a></li>
+        {% if products.has_next %}
+        <li class="page-item"><a class="page-link"
+                href="?page={{ products.next_page_number }}">{{ products.next_page_number }}</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ products.paginator.num_pages }}">Last</a></li>
+        {% endif %}
+    </ul>
+    <p class="text-center">Page {{ products.number }} of {{ products.paginator.num_pages }}.</p>
+</nav>
+<!-- End Pagination -->
+
+{% endblock %}
